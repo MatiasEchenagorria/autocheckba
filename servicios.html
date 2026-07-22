@@ -1,134 +1,429 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios de Inspección - AutoCheck</title>
-    <meta name="description" content="Conoce en detalle nuestras inspecciones vehiculares: motor, estructura, chapa, pintura y escáner OBD2.">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios | Autocheck Buenos Aires — Inspección y Certificación Vehicular</title>
+  <meta name="description" content="Inspección técnica integral, diagnóstico electrónico avanzado, certificación de vehículos y asesoramiento documental total en Buenos Aires.">
+  <meta name="author" content="Autocheck Buenos Aires">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://autocheckba.com/servicios.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Servicios | Autocheck Buenos Aires">
+  <meta property="og:description" content="Inspección técnica integral, diagnóstico avanzado, certificación de vehículos y asesoramiento documental en Buenos Aires.">
+  <meta property="og:image" content="autocheck.jpg">
+  <meta property="og:locale" content="es_AR">
+
+  <link rel="icon" href="autocheck.jpg" type="image/jpeg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    @keyframes wa-ping {
+      0%   { transform: scale(1);   opacity: .6; }
+      80%  { transform: scale(1.7); opacity: 0;  }
+      100% { transform: scale(1.7); opacity: 0;  }
+    }
+    .wa-ring { animation: wa-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease-out, transform .7s ease-out;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wa-ring { animation: none !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+    [x-cloak] { display: none !important; }
+  </style>
 </head>
-<body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <i class="fa-solid fa-car-on"></i> AutoCheck
-            </a>
-            <button class="menu-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="servicios.html">Servicios</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-        </div>
+<body class="bg-gray-900 text-white antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- ================= HEADER ================= -->
+  <header x-data="{ open: false }"
+          class="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-gray-900/70 backdrop-blur-md">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
+         aria-label="Navegación principal">
+      <a href="index.html" class="flex items-center gap-3" aria-label="Autocheck Buenos Aires — Inicio">
+        <img src="autocheck.jpg" alt="Logo de Autocheck Buenos Aires"
+             class="h-10 w-10 rounded-full object-cover ring-1 ring-white/20 sm:h-11 sm:w-11">
+        <span class="hidden text-sm font-semibold tracking-widest text-gray-300 sm:block">
+          AUTOCHECK <span class="text-white">BUENOS AIRES</span>
+        </span>
+      </a>
+      <ul class="hidden items-center gap-8 md:flex">
+        <li><a href="index.html"     class="text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white">Inicio</a></li>
+        <li><a href="servicios.html" class="text-sm font-medium text-white transition-colors duration-200 hover:text-blue-400" aria-current="page">Servicios</a></li>
+        <li><a href="nosotros.html"  class="text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white">Trayectoria</a></li>
+        <li><a href="contacto.html"  class="text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white">Contacto</a></li>
+        <li>
+          <a href="contacto.html"
+             class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-200 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+             aria-label="Solicitar asesoramiento">
+            Solicitar Asesoramiento
+          </a>
+        </li>
+      </ul>
+      <button @click="open = !open" type="button"
+              class="inline-flex items-center justify-center rounded-lg p-2 text-gray-300 transition-colors hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 md:hidden"
+              :aria-expanded="open" aria-controls="menu-movil" aria-label="Abrir menú de navegación">
+        <svg x-show="!open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+        </svg>
+        <svg x-show="open" x-cloak class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
     </nav>
+    <div id="menu-movil" x-show="open" x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         @click.outside="open = false"
+         class="border-t border-white/10 bg-gray-900/95 backdrop-blur-md md:hidden">
+      <ul class="space-y-1 px-4 py-4">
+        <li><a href="index.html"     @click="open = false" class="block rounded-lg px-3 py-2 text-base font-medium text-gray-300 transition-colors hover:bg-white/10 hover:text-white">Inicio</a></li>
+        <li><a href="servicios.html" @click="open = false" class="block rounded-lg bg-white/5 px-3 py-2 text-base font-medium text-white" aria-current="page">Servicios</a></li>
+        <li><a href="nosotros.html"  @click="open = false" class="block rounded-lg px-3 py-2 text-base font-medium text-gray-300 transition-colors hover:bg-white/10 hover:text-white">Trayectoria</a></li>
+        <li><a href="contacto.html"  @click="open = false" class="block rounded-lg px-3 py-2 text-base font-medium text-gray-300 transition-colors hover:bg-white/10 hover:text-white">Contacto</a></li>
+        <li class="pt-2">
+          <a href="contacto.html"
+             class="block rounded-lg bg-blue-600 px-3 py-2.5 text-center text-base font-semibold text-white transition-colors hover:bg-blue-500"
+             aria-label="Solicitar asesoramiento">Solicitar Asesoramiento</a>
+        </li>
+      </ul>
+    </div>
+  </header>
 
-    <!-- Page Header -->
-    <section class="section" style="padding-top: 150px; padding-bottom: 3rem; text-align: center;">
-        <div class="container">
-            <h1>Nuestros <span class="text-gradient">Servicios</span></h1>
-            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Ofrecemos una revisión completa y detallada de más de 150 puntos clave del vehículo para garantizar su correcto funcionamiento y estado.</p>
-        </div>
+  <main id="contenido-principal" class="pt-16">
+
+    <!-- ================= ENCABEZADO DE PÁGINA ================= -->
+    <section class="relative isolate overflow-hidden border-b border-white/10" aria-labelledby="pagina-titulo">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-gray-900 to-gray-950" aria-hidden="true"></div>
+      <div class="absolute left-1/2 top-0 -z-10 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-blue-600/10 blur-3xl" aria-hidden="true"></div>
+      <div class="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
+        <p class="text-sm font-semibold uppercase tracking-widest text-blue-400">Nuestros servicios</p>
+        <h1 id="pagina-titulo" class="mt-3 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          Un informe claro para decidir con confianza
+        </h1>
+        <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+          Cuatro servicios que se complementan para darte la foto completa del vehículo: estado técnico, historial electrónico, certificación y documentación.
+        </p>
+      </div>
     </section>
 
-    <!-- Detailed Services -->
-    <section class="section" style="padding-top: 0;">
-        <div class="container">
-            
-            <!-- Service 1 -->
-            <div class="glass-card" style="margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
-                <div style="flex: 1; min-width: 300px;">
-                    <i class="fa-solid fa-gears service-icon"></i>
-                    <h2>Inspección <span class="text-gradient">Mecánica</span></h2>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">Una revisión completa del corazón del auto. Aseguramos que no haya ruidos ocultos, fugas o desgaste prematuro que pueda costarte dinero a futuro.</p>
-                    <ul style="color: var(--text-main); margin-left: 1.5rem; list-style-type: disc;">
-                        <li>Estado y nivel de fluidos (aceite, refrigerante, frenos).</li>
-                        <li>Verificación de correas y tensores.</li>
-                        <li>Estado de suspensión, amortiguadores y tren delantero.</li>
-                        <li>Sistema de frenos (pastillas, discos y líquido).</li>
-                        <li>Prueba de manejo (ruidos, vibraciones, embrague).</li>
-                    </ul>
-                </div>
+    <!-- ================= SERVICIO 1: Inspección Técnica Integral ================= -->
+    <section id="inspeccion" class="py-20 sm:py-24" aria-labelledby="s1-titulo"
+             x-data x-intersect.once="$el.querySelectorAll('.reveal').forEach((e, i) => setTimeout(() => e.classList.add('is-visible'), i * 100))">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+          <div class="reveal">
+            <div class="inline-flex rounded-xl bg-blue-600/15 p-3 text-blue-400" aria-hidden="true">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
             </div>
-
-            <!-- Service 2 -->
-            <div class="glass-card" style="margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; flex-direction: row-reverse;">
-                <div style="flex: 1; min-width: 300px;">
-                    <i class="fa-solid fa-spray-can-sparkles service-icon"></i>
-                    <h2>Chapa, <span class="text-gradient">Pintura y Estructura</span></h2>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">Muchos autos esconden choques severos debajo de una pintura brillante. Nosotros detectamos si el auto ha sufrido accidentes que comprometan tu seguridad.</p>
-                    <ul style="color: var(--text-main); margin-left: 1.5rem; list-style-type: disc;">
-                        <li>Uso de medidor de espesor de pintura para detectar masilla.</li>
-                        <li>Revisión de soldaduras originales de fábrica (parantes, chasis).</li>
-                        <li>Alineación de puertas, capot y baúl.</li>
-                        <li>Verificación de cristales originales.</li>
-                        <li>Detección de óxido o corrosión estructural.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Service 3 -->
-            <div class="glass-card" style="margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
-                <div style="flex: 1; min-width: 300px;">
-                    <i class="fa-solid fa-laptop-code service-icon"></i>
-                    <h2>Diagnóstico <span class="text-gradient">Computarizado</span></h2>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">Los autos modernos son computadoras sobre ruedas. Escaneamos todos los módulos para leer lo que el tablero no te dice.</p>
-                    <ul style="color: var(--text-main); margin-left: 1.5rem; list-style-type: disc;">
-                        <li>Lectura de códigos de falla históricos y activos.</li>
-                        <li>Revisión de parámetros en tiempo real (sensores, inyección).</li>
-                        <li>Verificación de inconsistencias en el kilometraje de los módulos.</li>
-                        <li>Estado del sistema de airbags y ABS.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 4rem;">
-                <a href="contacto.html" class="btn btn-primary" style="font-size: 1.2rem;">¡Quiero agendar una revisión ahora!</a>
-            </div>
-
+            <h2 id="s1-titulo" class="mt-5 text-2xl font-bold text-white sm:text-3xl">Inspección Técnica Integral</h2>
+            <p class="mt-4 leading-7 text-gray-300">
+              Una revisión punto por punto del vehículo, hecha por un especialista con más de 28 años en el sector. El objetivo es simple: que sepas exactamente qué estás comprando antes de firmar nada.
+            </p>
+            <p class="mt-3 leading-7 text-gray-300">
+              Al finalizar recibís un informe con fotografías, observaciones y una conclusión clara sobre el estado general del vehículo.
+            </p>
+          </div>
+          <ul class="reveal grid grid-cols-1 gap-4 sm:grid-cols-2" aria-label="Puntos que cubre la inspección">
+            <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Carrocería y estructura</h3>
+              <p class="mt-1 text-sm text-gray-400">Detección de golpes, repintados, masilla y daños estructurales.</p>
+            </li>
+            <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Motor y mecánica</h3>
+              <p class="mt-1 text-sm text-gray-400">Estado del motor, pérdidas, ruidos, correas y fluidos.</p>
+            </li>
+            <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Interior y equipamiento</h3>
+              <p class="mt-1 text-sm text-gray-400">Tapizados, comandos, aire acondicionado y accesorios eléctricos.</p>
+            </li>
+            <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Prueba de manejo</h3>
+              <p class="mt-1 text-sm text-gray-400">Comportamiento de caja, embrague, frenos, tren delantero y dirección.</p>
+            </li>
+          </ul>
         </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <a href="index.html" class="logo" style="margin-bottom: 1rem;">
-                        <i class="fa-solid fa-car-on"></i> AutoCheck
-                    </a>
-                    <p>La tranquilidad de saber lo que compras. Tu inspección vehicular de confianza.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="servicios.html">Servicios</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Contacto</h3>
-                    <p><i class="fa-solid fa-phone"></i> +54 9 11 1234-5678</p>
-                    <p><i class="fa-solid fa-envelope"></i> info@autocheck.com</p>
-                    <p><i class="fa-solid fa-location-dot"></i> Buenos Aires, Argentina</p>
-                </div>
+    <!-- ================= SERVICIO 2: Diagnóstico Avanzado ================= -->
+    <section id="diagnostico" class="border-y border-white/10 bg-gray-950/60 py-20 sm:py-24" aria-labelledby="s2-titulo"
+             x-data x-intersect.once="$el.querySelectorAll('.reveal').forEach((e, i) => setTimeout(() => e.classList.add('is-visible'), i * 100))">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+          <div class="reveal order-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:order-1" aria-label="Equipamiento de diagnóstico">
+            <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+              <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Escáner profesional</p>
+              <h3 class="mt-2 text-base font-semibold text-white">Autel MX900</h3>
+              <p class="mt-1 text-sm text-gray-400">Lectura de todos los módulos electrónicos: motor, ABS, airbag, transmisión y más. Detecta fallas presentes, históricas y kilometraje adulterado.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 AutoCheck. Todos los derechos reservados.</p>
+            <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+              <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Medidor de pintura</p>
+              <h3 class="mt-2 text-base font-semibold text-white">UNI-T 343</h3>
+              <p class="mt-1 text-sm text-gray-400">Medición de espesor de pintura panel por panel. Revela repintados y reparaciones de chapa invisibles a simple vista.</p>
             </div>
+          </div>
+          <div class="reveal order-1 lg:order-2">
+            <div class="inline-flex rounded-xl bg-blue-600/15 p-3 text-blue-400" aria-hidden="true">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
+              </svg>
+            </div>
+            <h2 id="s2-titulo" class="mt-5 text-2xl font-bold text-white sm:text-3xl">Diagnóstico Avanzado</h2>
+            <p class="mt-4 leading-7 text-gray-300">
+              Lo que el ojo no ve, la electrónica lo cuenta. Con instrumental de nivel profesional escaneamos la computadora del vehículo y medimos el espesor de pintura de cada panel.
+            </p>
+            <p class="mt-3 leading-7 text-gray-300">
+              Es la herramienta más efectiva para detectar choques reparados, kilometraje adulterado y fallas electrónicas que el vendedor puede no mencionar.
+            </p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- Botón Flotante WhatsApp -->
-    <a href="https://wa.me/5491112345678" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <!-- ================= SERVICIO 3: Certificación de Vehículos ================= -->
+    <section id="certificacion" class="py-20 sm:py-24" aria-labelledby="s3-titulo"
+             x-data x-intersect.once="$el.querySelectorAll('.reveal').forEach((e, i) => setTimeout(() => e.classList.add('is-visible'), i * 100))">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+          <div class="reveal">
+            <div class="inline-flex rounded-xl bg-blue-600/15 p-3 text-blue-400" aria-hidden="true">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/>
+              </svg>
+            </div>
+            <h2 id="s3-titulo" class="mt-5 text-2xl font-bold text-white sm:text-3xl">Certificación de Vehículos</h2>
+            <p class="mt-4 leading-7 text-gray-300">
+              Un informe técnico certificado que documenta el estado real del vehículo al momento de la revisión. Sirve tanto para el que compra como para el que vende.
+            </p>
+            <p class="mt-3 leading-7 text-gray-300">
+              Si vendés, la certificación respalda tu precio y genera confianza inmediata en el comprador. Si comprás, es tu garantía documentada de lo que te llevás.
+            </p>
+          </div>
+          <ul class="reveal space-y-4" aria-label="Qué incluye la certificación">
+            <li class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+              </svg>
+              <p class="text-sm text-gray-300"><span class="font-semibold text-white">Informe fotográfico completo</span> con el detalle de cada punto revisado.</p>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+              </svg>
+              <p class="text-sm text-gray-300"><span class="font-semibold text-white">Resultados del escaneo electrónico</span> y de la medición de pintura panel por panel.</p>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+              </svg>
+              <p class="text-sm text-gray-300"><span class="font-semibold text-white">Conclusión profesional firmada</span>, con recomendación clara: comprar, negociar o descartar.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-    <script src="js/main.js"></script>
+    <!-- ================= SERVICIO 4: Asesoramiento Documental ================= -->
+    <section id="documental" class="border-y border-white/10 bg-gray-950/60 py-20 sm:py-24" aria-labelledby="s4-titulo"
+             x-data x-intersect.once="$el.querySelectorAll('.reveal').forEach((e, i) => setTimeout(() => e.classList.add('is-visible'), i * 100))">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+          <div class="reveal order-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:order-1" aria-label="Verificaciones documentales">
+            <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Informe de dominio</h3>
+              <p class="mt-1 text-sm text-gray-400">Titularidad, embargos, prendas e inhibiciones.</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Deudas e infracciones</h3>
+              <p class="mt-1 text-sm text-gray-400">Patentes, multas y peajes pendientes.</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Verificación de numeraciones</h3>
+              <p class="mt-1 text-sm text-gray-400">Chasis y motor coincidentes con la documentación.</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+              <h3 class="text-sm font-semibold text-white">Acompañamiento en la operación</h3>
+              <p class="mt-1 text-sm text-gray-400">Guía en la transferencia y los trámites registrales.</p>
+            </div>
+          </div>
+          <div class="reveal order-1 lg:order-2">
+            <div class="inline-flex rounded-xl bg-blue-600/15 p-3 text-blue-400" aria-hidden="true">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+              </svg>
+            </div>
+            <h2 id="s4-titulo" class="mt-5 text-2xl font-bold text-white sm:text-3xl">Asesoramiento Documental Total</h2>
+            <p class="mt-4 leading-7 text-gray-300">
+              Un vehículo impecable con papeles en regla: esa es la única compra segura. Verificamos toda la documentación para que la operación no tenga sorpresas legales ni administrativas.
+            </p>
+            <p class="mt-3 leading-7 text-gray-300">
+              Y si algo no está en orden, te decimos exactamente qué falta y cómo resolverlo antes de avanzar.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CÓMO TRABAJAMOS (proceso) ================= -->
+    <section class="py-20 sm:py-24" aria-labelledby="proceso-titulo"
+             x-data x-intersect.once="$el.querySelectorAll('.reveal').forEach((e, i) => setTimeout(() => e.classList.add('is-visible'), i * 120))">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <p class="text-sm font-semibold uppercase tracking-widest text-blue-400">Cómo trabajamos</p>
+          <h2 id="proceso-titulo" class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Simple para vos, riguroso para nosotros
+          </h2>
+        </div>
+        <ol class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <li class="reveal rounded-2xl border border-white/10 bg-white/5 p-6">
+            <span class="text-3xl font-bold text-blue-500" aria-hidden="true">1</span>
+            <h3 class="mt-3 text-base font-semibold text-white">Nos contactás</h3>
+            <p class="mt-2 text-sm text-gray-400">Por WhatsApp o teléfono nos pasás los datos del vehículo y dónde está.</p>
+          </li>
+          <li class="reveal rounded-2xl border border-white/10 bg-white/5 p-6">
+            <span class="text-3xl font-bold text-blue-500" aria-hidden="true">2</span>
+            <h3 class="mt-3 text-base font-semibold text-white">Coordinamos la visita</h3>
+            <p class="mt-2 text-sm text-gray-400">Vamos al lugar donde está el vehículo, en el día y horario que acordemos.</p>
+          </li>
+          <li class="reveal rounded-2xl border border-white/10 bg-white/5 p-6">
+            <span class="text-3xl font-bold text-blue-500" aria-hidden="true">3</span>
+            <h3 class="mt-3 text-base font-semibold text-white">Inspeccionamos</h3>
+            <p class="mt-2 text-sm text-gray-400">Revisión completa: mecánica, chapa, pintura, electrónica y documentación.</p>
+          </li>
+          <li class="reveal rounded-2xl border border-white/10 bg-white/5 p-6">
+            <span class="text-3xl font-bold text-blue-500" aria-hidden="true">4</span>
+            <h3 class="mt-3 text-base font-semibold text-white">Recibís el informe</h3>
+            <p class="mt-2 text-sm text-gray-400">Informe fotográfico con conclusión clara y recomendación profesional.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= CTA FINAL ================= -->
+    <section class="border-t border-white/10 bg-gradient-to-r from-blue-950/60 via-gray-900 to-blue-950/60 py-20" aria-labelledby="cta-titulo"
+             x-data x-intersect.once="$el.querySelectorAll('.reveal').forEach(e => e.classList.add('is-visible'))">
+      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <h2 id="cta-titulo" class="reveal text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          ¿Encontraste el auto que querés?
+        </h2>
+        <p class="reveal mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+          No lo compres sin revisarlo. Escribinos y coordinamos la inspección donde esté el vehículo.
+        </p>
+        <div class="reveal mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a href="contacto.html"
+             class="w-full rounded-lg bg-blue-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 sm:w-auto"
+             aria-label="Ir a la página de contacto">
+            Coordinar mi Inspección
+          </a>
+          <a href="https://wa.me/5491179003333?text=Hola%20Autocheck%2C%20vengo%20de%20la%20p%C3%A1gina%20web%20y%20necesito%20informaci%C3%B3n"
+             target="_blank" rel="noopener noreferrer"
+             class="w-full rounded-lg border border-white/15 bg-white/5 px-8 py-3.5 text-base font-semibold text-gray-300 backdrop-blur transition-all duration-200 hover:border-white/30 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 sm:w-auto"
+             aria-label="Abrir conversación de WhatsApp">
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-white/10 bg-gray-950" aria-label="Pie de página">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div>
+          <a href="index.html" class="inline-flex items-center gap-3" aria-label="Autocheck Buenos Aires — Inicio">
+            <img src="autocheck.jpg" alt="Logo de Autocheck Buenos Aires" class="h-11 w-11 rounded-full object-cover ring-1 ring-white/20">
+            <span class="text-sm font-semibold tracking-widest text-gray-300">AUTOCHECK <span class="text-white">BUENOS AIRES</span></span>
+          </a>
+          <p class="mt-4 max-w-xs text-sm leading-6 text-gray-400">
+            Inspección, diagnóstico y certificación técnica integral de vehículos. Transparencia, seguridad y confianza en cada revisión.
+          </p>
+        </div>
+        <nav aria-label="Enlaces rápidos">
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-white">Enlaces rápidos</h3>
+          <ul class="mt-4 space-y-3">
+            <li><a href="index.html"     class="text-sm text-gray-400 transition-colors hover:text-white">Inicio</a></li>
+            <li><a href="servicios.html" class="text-sm text-gray-400 transition-colors hover:text-white">Servicios</a></li>
+            <li><a href="nosotros.html"  class="text-sm text-gray-400 transition-colors hover:text-white">Trayectoria</a></li>
+            <li><a href="contacto.html"  class="text-sm text-gray-400 transition-colors hover:text-white">Contacto</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-white">Contacto</h3>
+          <ul class="mt-4 space-y-3 text-sm text-gray-400">
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+              </svg>
+              <span>Buenos Aires, Argentina</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+              </svg>
+              <a href="tel:+5491179003333" class="transition-colors hover:text-white" aria-label="Llamar al 11 7900 3333">11 7900-3333</a>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+              </svg>
+              <a href="mailto:info@autocheckba.com" class="transition-colors hover:text-white" aria-label="Enviar correo a info@autocheckba.com">info@autocheckba.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 flex flex-col items-center justify-between gap-5 border-t border-white/10 pt-8 sm:flex-row">
+        <p class="text-xs text-gray-500">&copy; 2026 Autocheck Buenos Aires. Todos los derechos reservados.</p>
+        <div class="flex items-center gap-4">
+          <a href="https://www.instagram.com/autocheckbuenosaires" target="_blank" rel="noopener noreferrer"
+             class="text-gray-400 transition-colors hover:text-white" aria-label="Instagram de Autocheck Buenos Aires">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@autocheckba" target="_blank" rel="noopener noreferrer"
+             class="text-gray-400 transition-colors hover:text-white" aria-label="TikTok de Autocheck Buenos Aires">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64c.298 0 .595.045.88.13V9.4a6.84 6.84 0 00-.88-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= BOTÓN WHATSAPP ================= -->
+  <a href="https://wa.me/5491179003333?text=Hola%20Autocheck%2C%20vengo%20de%20la%20p%C3%A1gina%20web%20y%20necesito%20informaci%C3%B3n"
+     target="_blank" rel="noopener noreferrer"
+     class="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-xl shadow-green-500/30 transition-transform duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+     aria-label="Escribinos por WhatsApp">
+    <span class="wa-ring absolute inset-0 rounded-full bg-green-500" aria-hidden="true"></span>
+    <svg class="relative h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <style>[x-cloak]{display:none!important}</style>
 </body>
 </html>
